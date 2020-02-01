@@ -9,13 +9,13 @@ public class DNAManagerEditor : Editor
     {
         DrawDefaultInspector();
         var t = (DNAManager) target;
-        if (GUILayout.Button("Rebuild DNA"))
-        {
-            t.RebuildDNA();
-        }
         if (GUILayout.Button("Add Slots"))
         {
             t.InsertSlots();
+        }
+        if (GUILayout.Button("Add DNAs"))
+        {
+            t.AddDNAs();
         }
         if (GUILayout.Button("Remove All"))
         {

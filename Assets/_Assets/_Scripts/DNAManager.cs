@@ -30,45 +30,12 @@ namespace DNA
         private const float _startSizeCamera = 0.64f;
         private const float _stepSizeCameraForOneDNA = 0.3f;
 
-        public static List<DNA> DNAList
-        {
-            get
-            {
-                if (Instance._dnaList.Count > 0) return Instance._dnaList;
-                Instance.UpdateDNAData();
-                return Instance._dnaList;
-            }
-        }
+        public static List<DNA> DNAList => Instance._dnaList;
+        private float _lastRotate;
 
         private void OnEnable()
         {
-            UpdateDNAData();
             CalcCameraSize();
-        }
-
-        private void UpdateDNAData()
-        {
-            Instance._dnaList.AddRange(Instance.GetComponentsInChildren<DNA>());
-            if (_slotsList.Count > 0)
-            {
-                _slotsList.ForEach(x =>
-                {
-                    x.DNA.transform.SetParent(x.transform.parent);
-                    DestroyImmediate(x.gameObject);
-                });
-                _slotsList.Clear();
-            }
-            for (int i = 0; i < _dnaList.Count; i++)
-            {
-                var newSlot = new GameObject("Slot" + i);
-                var newSlotComponent = newSlot.AddComponent<Slot>();
-                newSlot.transform.SetParent(_dnaList[i].transform.parent);
-                newSlot.transform.localPosition = _dnaList[i].transform.localPosition;
-                _dnaList[i].transform.SetParent(newSlot.transform);
-                _slotsList.Add(newSlotComponent);
-                _dnaList[i].Slot = newSlotComponent;
-                newSlotComponent.DNA = _dnaList[i];
-            }
         }
 
         public static void CheckNewDNAPos(DNA inDNA)
@@ -87,6 +54,16 @@ namespace DNA
             inDNA.Slot.ChangeDNASlots(slot);
         }
 
+        private void Update()
+        {
+            RotateAllDNAs();
+        }
+
+        private void RotateAllDNAs()
+        {
+            transform.Rotate(GameManager.SpeedRotateDNA * Time.deltaTime, 0f, 0f);
+        }
+
         public static void CheckResult()
         {
             var allScore = 0f;
@@ -95,7 +72,7 @@ namespace DNA
             {
                 if (Instance._dnaCompare[i].IdDNA == Instance._slotsList[i].DNA.ID) allScore += score;
             }
-            Debug.Log("Score: " + Mathf.RoundToInt(allScore));
+            Debug.Log("Score: " + Mathf.RoundToInt(allScore * 100f));
         }
 
         public static void RandomDNA()
@@ -115,18 +92,6 @@ namespace DNA
         
         #if UNITY_EDITOR
 
-        public void RebuildDNA()
-        {
-            if(_dnaCompare.Count <= 0) return;
-
-            for (int i = 0; i < DNAList.Count; i++)
-            {
-                DNAList[i].ID = _dnaCompare[i].IdDNA;
-                DNAList[i].Slot.ID = i;
-            }
-
-            RandomDNA();
-        }
 
         public void InsertSlots()
         {
@@ -138,6 +103,7 @@ namespace DNA
                 var newSlotComponent = newSlot.AddComponent<Slot>();
                 newSlotComponent.ID = i;
                 newSlot.transform.SetParent(transform);
+                _slotsList.Add(newSlotComponent);
                 var pos = Vector3.zero;
                 if (!isEven)
                 {
@@ -150,6 +116,7 @@ namespace DNA
                         var duplicate = Instantiate(newSlot, newSlot.transform.parent).GetComponent<Slot>();
                         duplicate.transform.localPosition = pos;
                         duplicate.ID = i + 1;
+                        _slotsList.Add(duplicate);
                         i++;
                     } 
                     else newSlot.transform.localPosition = pos;
@@ -164,16 +131,46 @@ namespace DNA
                     var duplicate = Instantiate(newSlot, newSlot.transform.parent).GetComponent<Slot>();
                     duplicate.transform.localPosition = pos;
                     duplicate.ID = i + 1;
+                    _slotsList.Add(duplicate);
                     i++;
                 }
             }
-            _slotsList.Sort();
+            _slotsList.Sort(SortSlots);
+            for (int i = 0; i < _slotsList.Count; i++)
+            {
+                _slotsList[i].transform.SetSiblingIndex(i);
+                _slotsList[i].name = "Slots_" + i;
+            }
+            
+            int SortSlots(Slot a, Slot b)
+            {
+                var dist = a.transform.position.x - b.transform.position.x;
+                return Mathf.RoundToInt(dist);
+            }
+        }
+
+        public void AddDNAs()
+        {
+            for (int i = 0; i < _slotsList.Count; i++)
+            {
+                var dna = Instantiate(_dnaPrefab, _slotsList[i].transform);
+                dna.name = "DNA_" + i;
+                dna.transform.localPosition = Vector3.zero;
+                var dnaComp = dna.GetComponent<DNA>();
+                dnaComp.ID = _slotsList[i].ID;
+                dnaComp.Slot = _slotsList[i];
+                _slotsList[i].DNA = dnaComp;
+                _dnaList.Add(dnaComp);
+            }
+            RandomDNA();
         }
 
         public void RemoveAll()
         {
+            var list = new List<GameObject>();
             for (int i = 0; i < transform.childCount; i++)
-                DestroyImmediate(transform.GetChild(i));
+                list.Add(transform.GetChild(i).gameObject);
+            list.ForEach(DestroyImmediate);
             _slotsList.Clear();
             _dnaList.Clear();
         }
