@@ -9,7 +9,7 @@ public class HumanPart : MonoBehaviour
     [SerializeField] private Transform _direction;
     public int ID => _id;
     public HumanPartSize Size => _size;
-    public Transform Direction => _direction;
+    public Transform Direction => _direction ? _direction : transform.Find("Direction");
 }
 
 public enum HumanPartSize
