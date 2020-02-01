@@ -11,25 +11,28 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/DNAManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/Editor/DNAManagerEditor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/Slot.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/CameraControl.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/DNA.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.3.0f6/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Layout/LayoutGroup.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/GlobalEvents.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/Editor/DNAManagerEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.3.0f6/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Layout/HorizontalOrVerticalLayoutGroup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.3.0f6/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Layout/HorizontalLayoutGroup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/DNA.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/DNAManager.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/CameraControl.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/GlobalEvents.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/GameManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Editor/DNAManagerEditor.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Extensions.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/DNA.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Slot.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/DNA.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Extensions.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Editor/DNAManagerEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/DNAManager.cs" />
       </list>
     </option>
@@ -82,7 +85,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1580547718578</updated>
-      <workItem from="1580547725061" duration="19502000" />
+      <workItem from="1580547725061" duration="26713000" />
+      <workItem from="1580587768881" duration="60000" />
     </task>
     <servers />
   </component>

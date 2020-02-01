@@ -152,6 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dnaCamera: {fileID: 1816448168}
   _clientCamera: {fileID: 1229881669}
+  _speedRotateDNA: 20
 --- !u!4 &269830951
 Transform:
   m_ObjectHideFlags: 0
@@ -771,7 +772,7 @@ Camera:
   far clip plane: 20
   field of view: 60
   orthographic: 1
-  orthographic size: 1
+  orthographic size: 0.94
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

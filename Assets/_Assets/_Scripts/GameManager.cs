@@ -14,6 +14,9 @@ namespace DNA
         [SerializeField] private Camera _clientCamera;
         public static Camera ClientCamera => Instance._clientCamera;
 
+        [SerializeField] private float _speedRotateDNA;
+        public static float SpeedRotateDNA => Instance._speedRotateDNA;
+
         private static int _nowLevelID = 0;
         public static GameState NowStepLevel { get; private set; } = 0;
 

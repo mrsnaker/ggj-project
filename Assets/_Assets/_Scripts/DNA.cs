@@ -16,6 +16,10 @@ namespace DNA
         private bool _isRotate = false;
         private float _lastPosX;
         private float _lastRotY;
+
+        private SkinnedMeshRenderer _renderer;
+        private SkinnedMeshRenderer Renderer => _renderer ? _renderer : _renderer = GetComponent<SkinnedMeshRenderer>();
+
         private void OnMouseOver()
         {
             if (Input.GetMouseButtonDown(0))
@@ -37,6 +41,7 @@ namespace DNA
                 {
                     case GameState.PlayStage:
                         _isRotate = true;
+                        _lastRotY = Input.mousePosition.y;
                         break;
                     case GameState.CalculateResult:
                     case GameState.LoadingNextLevel:
@@ -76,6 +81,7 @@ namespace DNA
                 {
                     case GameState.PlayStage:
                         _isRotate = false;
+                        _lastRotY = 0f;
                         break;
                     case GameState.CalculateResult:
                     case GameState.LoadingNextLevel:
@@ -102,9 +108,10 @@ namespace DNA
             if(!_isRotate) return;
             
             var mousePos = Input.mousePosition;
-            var rot = transform.localEulerAngles;
+            Renderer.SetBlendShapeWeight(0, Mathf.Clamp(Renderer.GetBlendShapeWeight(0) + (mousePos.y - _lastRotY) * GameManager.SpeedRotateDNA * Time.deltaTime, 0, 100));
+            /*var rot = transform.localEulerAngles;
             rot.x += (mousePos.y - _lastRotY) * Time.deltaTime;
-            transform.localEulerAngles = rot;
+            transform.localEulerAngles = rot;*/
             _lastRotY = mousePos.y;
         }
 

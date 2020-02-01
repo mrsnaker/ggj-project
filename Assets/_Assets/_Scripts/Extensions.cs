@@ -15,9 +15,9 @@ public enum GameState
 public class CompareSlotDNA
 {
     [SerializeField] private int _idDNA;
-    [SerializeField] private float _rotateAngle;
+    [Range(0,100)] [SerializeField] private float _rotateAngle;
 
-    public int IdDNA => _idDNA;
+    public int IdDNA => _idDNA; 
     public float RotateAngle => _rotateAngle;
 }
 

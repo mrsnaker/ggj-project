@@ -13,5 +13,13 @@ public class DNAManagerEditor : Editor
         {
             t.RebuildDNA();
         }
+        if (GUILayout.Button("Add Slots"))
+        {
+            t.InsertSlots();
+        }
+        if (GUILayout.Button("Remove All"))
+        {
+            t.RemoveAll();
+        }
     }
 }

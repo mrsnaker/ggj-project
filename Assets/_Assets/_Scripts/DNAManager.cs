@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace DNA
@@ -11,9 +12,23 @@ namespace DNA
         private static DNAManager _instance;
         private static DNAManager Instance => _instance ? _instance : _instance = FindObjectOfType<DNAManager>();
 
+        [SerializeField] private GameObject _dnaPrefab;
         [SerializeField] private List<CompareSlotDNA> _dnaCompare;
         [SerializeField] private List<DNA> _dnaList = new List<DNA>();
         [SerializeField] private List<Slot> _slotsList = new List<Slot>();
+        [SerializeField] private float _orthographicSize;
+        public float OrthographicSize
+        {
+            set
+            {
+                _orthographicSize = value;
+                GameManager.DNACamera.orthographicSize = value;
+            }
+        }
+
+        private const float _sizeDNA = 4.2f;
+        private const float _startSizeCamera = 0.64f;
+        private const float _stepSizeCameraForOneDNA = 0.3f;
 
         public static List<DNA> DNAList
         {
@@ -25,9 +40,10 @@ namespace DNA
             }
         }
 
-        private void Awake()
+        private void OnEnable()
         {
             UpdateDNAData();
+            CalcCameraSize();
         }
 
         private void UpdateDNAData()
@@ -90,6 +106,12 @@ namespace DNA
                 dna.Slot.ChangeDNASlots(DNAList[random].Slot, true);
             }
         }
+
+        private void CalcCameraSize()
+        {
+            if (DNAList.Count <= 2) OrthographicSize = _startSizeCamera;
+            else OrthographicSize = _startSizeCamera + (DNAList.Count - 2) * _stepSizeCameraForOneDNA;
+        }
         
         #if UNITY_EDITOR
 
@@ -104,6 +126,56 @@ namespace DNA
             }
 
             RandomDNA();
+        }
+
+        public void InsertSlots()
+        {
+            var prevValue = 0f;
+            var isEven = _dnaCompare.Count % 2 == 0;
+            for (int i = 0, j = 0; i < _dnaCompare.Count; i++, j++)
+            {
+                var newSlot = new GameObject("Slot" + i);
+                var newSlotComponent = newSlot.AddComponent<Slot>();
+                newSlotComponent.ID = i;
+                newSlot.transform.SetParent(transform);
+                var pos = Vector3.zero;
+                if (!isEven)
+                {
+                    if (i > 0)
+                    {
+                        pos.x = prevValue + _sizeDNA;
+                        prevValue = pos.x;
+                        newSlot.transform.localPosition = pos;
+                        pos.x = -pos.x;
+                        var duplicate = Instantiate(newSlot, newSlot.transform.parent).GetComponent<Slot>();
+                        duplicate.transform.localPosition = pos;
+                        duplicate.ID = i + 1;
+                        i++;
+                    } 
+                    else newSlot.transform.localPosition = pos;
+                }
+                else
+                {
+                    if (i == 0) pos.x = _sizeDNA * 0.5f;
+                    else pos.x = prevValue + _sizeDNA;
+                    prevValue = pos.x;
+                    newSlot.transform.localPosition = pos;
+                    pos.x = -pos.x;
+                    var duplicate = Instantiate(newSlot, newSlot.transform.parent).GetComponent<Slot>();
+                    duplicate.transform.localPosition = pos;
+                    duplicate.ID = i + 1;
+                    i++;
+                }
+            }
+            _slotsList.Sort();
+        }
+
+        public void RemoveAll()
+        {
+            for (int i = 0; i < transform.childCount; i++)
+                DestroyImmediate(transform.GetChild(i));
+            _slotsList.Clear();
+            _dnaList.Clear();
         }
         
         #endif
