@@ -11,7 +11,21 @@ namespace DNA
             get => _id;
             set => _id = value;
         }
-        public Slot Slot { get; set; }
+        
+        [SerializeField] private int _idPartHuman = 0;
+        public int IDPartHuman
+        {
+            get => _idPartHuman;
+            set => _idPartHuman = value;
+        }
+
+        [SerializeField] private Slot _slot;
+        public Slot Slot
+        {
+            get => _slot;
+            set => _slot = value;
+        }
+
         private bool _isDrag = false;
         private bool _isRotate = false;
         private float _lastPosX;
@@ -20,6 +34,11 @@ namespace DNA
         private SkinnedMeshRenderer _renderer;
         private SkinnedMeshRenderer Renderer => _renderer ? _renderer : _renderer = GetComponent<SkinnedMeshRenderer>();
 
+        private void Awake()
+        {
+            Renderer.material.color = new Color(Random.value, Random.value, Random.value);
+        }
+        
         private void OnMouseOver()
         {
             if (Input.GetMouseButtonDown(0))

@@ -15,9 +15,11 @@ public enum GameState
 public class CompareSlotDNA
 {
     [SerializeField] private int _idDNA;
+    [SerializeField] private int _idPartHuman;
     [Range(0,100)] [SerializeField] private float _rotateAngle;
 
-    public int IdDNA => _idDNA; 
+    public int IdDNA => _idDNA;
+    public int IdPartHuman => _idPartHuman;
     public float RotateAngle => _rotateAngle;
 }
 
@@ -28,6 +30,7 @@ public static class Extension
 
     public static void ChangeDNASlots(this Slot slot, Slot newSlot, bool fast = false)
     {
+        if(!Application.isPlaying) return;
         var tempSlotDNA = slot.DNA;
         slot.DNA = newSlot.DNA;
         newSlot.DNA = tempSlotDNA;
@@ -35,6 +38,10 @@ public static class Extension
         newSlot.DNA.Slot = newSlot;
         slot.DNA.ResetSmoothPos(fast);
         newSlot.DNA.ResetSmoothPos(fast);
+
+        var slot1 = Human.GetCurrentSlotFromPart(Human.HumanParts[slot.DNA.IDPartHuman]);
+        var slot2 = Human.GetCurrentSlotFromPart(Human.HumanParts[newSlot.DNA.IDPartHuman]);
+        Human.SwapParts(slot1, slot2);
     }
 
     public static bool CheckBorderViewForDNA(this Transform transform, float dir, Vector3 newPos)
