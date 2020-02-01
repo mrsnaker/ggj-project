@@ -1,11 +1,16 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 
 namespace DNA
 {
     public class DNA : MonoBehaviour
     {
+        [SerializeField] private int _id = 0;
+        public int ID
+        {
+            get => _id;
+            set => _id = value;
+        }
         public Slot Slot { get; set; }
         private bool _isDrag = false;
         private bool _isRotate = false;
@@ -103,9 +108,14 @@ namespace DNA
             _lastRotY = mousePos.y;
         }
 
-        public void ResetSmoothPos()
+        public void ResetSmoothPos(bool fast)
         {
-            transform.DOMove(Slot.Pos, 0.2f).OnComplete(() => transform.SetParent(Slot.transform));
+            if (fast)
+            {
+                transform.position = Slot.Pos;
+                transform.SetParent(Slot.transform);
+            }
+            else transform.DOMove(Slot.Pos, 0.2f).OnComplete(() => transform.SetParent(Slot.transform));
         }
     }
 }

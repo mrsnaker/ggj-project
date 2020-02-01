@@ -31,5 +31,10 @@ namespace DNA
         {
             
         }
+
+        public void CheckResultButton()
+        {
+            DNAManager.CheckResult();
+        }
     }
 }

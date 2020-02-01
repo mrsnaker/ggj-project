@@ -13,6 +13,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/DNAManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/Editor/DNAManagerEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/Slot.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/CameraControl.cs" root0="FORCE_HIGHLIGHTING" />
@@ -25,10 +26,11 @@
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/CameraControl.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/GlobalEvents.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/GameManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Slot.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/DNAManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Editor/DNAManagerEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Extensions.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/DNA.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Slot.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/DNAManager.cs" />
       </list>
     </option>
   </component>
@@ -80,7 +82,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1580547718578</updated>
-      <workItem from="1580547725061" duration="12479000" />
+      <workItem from="1580547725061" duration="19502000" />
     </task>
     <servers />
   </component>
