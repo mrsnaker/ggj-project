@@ -2,21 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 
 public class Human : MonoBehaviour
 {
     private static Human _instance;
-    private static Human Instance => _instance ? _instance : FindObjectOfType<Human>();
+    public static Human Instance => _instance ? _instance : FindObjectOfType<Human>();
 
     [SerializeField] private HumanPartSlot _humanPartSlotPrefab;
     [SerializeField] private List<HumanPart> _humanParts;
-
     [SerializeField] private Dictionary<HumanPartSize, List<HumanPartSlot>> _humanSlots = new Dictionary<HumanPartSize, List<HumanPartSlot>>();
 
+    [SerializeField] private SkinnedMeshRenderer _chest;
+
     private static System.Random rng = new System.Random();
+    private Sequence _chestAnimation;
 
     private void Awake()
     {
+        _chestAnimation = StartChestAnimation();
         _humanParts = new List<HumanPart>();
         _humanParts = GetComponentsInChildren<HumanPart>().ToList();
 
@@ -45,9 +49,23 @@ public class Human : MonoBehaviour
         }
 
         var randomSlot1 = Random.Range(0, _humanSlots[HumanPartSize.Big].Count);
-        var randomSlot2 = Random.Range(0, _humanSlots[HumanPartSize.Big].Count);
+        var randomSlot2 = (randomSlot1 + Random.Range(1, _humanSlots[HumanPartSize.Big].Count)) % _humanSlots[HumanPartSize.Big].Count;
         SwapParts(_humanSlots[HumanPartSize.Big][randomSlot1], _humanSlots[HumanPartSize.Big][randomSlot2]);
         //ShuffleParts(_humanPartSlots);
+    }
+
+    private Sequence StartChestAnimation()
+    {
+        return DOTween.Sequence()
+            .AppendCallback(()=> { _chest.SetBlendShapeWeight(0, 0); })
+            .Append(DOTween.To(() => _chest.GetBlendShapeWeight(0), x => _chest.SetBlendShapeWeight(0, x), 100f, 1.5f))
+            .Append(DOTween.To(() => _chest.GetBlendShapeWeight(0), x => _chest.SetBlendShapeWeight(0, x), 0f, 0.75f))
+            .SetLoops(-1);
+    }
+
+    private void StopChestAnimation()
+    {
+
     }
 
     private static HumanPartSlot GetRightSlotFromPart(HumanPart part)
@@ -81,7 +99,9 @@ public class Human : MonoBehaviour
         a.CurrentPart.transform.localRotation = Quaternion.identity;
 
         var diff = a.Direction.localRotation.eulerAngles - a.CurrentPart.Direction.localRotation.eulerAngles;
-        a.CurrentPart.transform.localRotation = Quaternion.Euler(diff);
+        //diff = a.CurrentPart.Direction.localRotation.eulerAngles - a.Direction.localRotation.eulerAngles;
+        //diff = new Vector3(Mathf.Abs(diff.x), Mathf.Abs(diff.y), Mathf.Abs(diff.z));
+        a.CurrentPart.transform.localRotation = a.Direction.localRotation;//Quaternion.Euler(diff);
 
         b.CurrentPart = temp;
         b.CurrentPart.transform.parent = b.transform;
@@ -89,7 +109,9 @@ public class Human : MonoBehaviour
         b.CurrentPart.transform.localRotation = Quaternion.identity;
 
         diff = b.Direction.localRotation.eulerAngles - b.CurrentPart.Direction.localRotation.eulerAngles;
-        b.CurrentPart.transform.localRotation = Quaternion.Euler(diff);
+        //diff = b.CurrentPart.Direction.localRotation.eulerAngles - b.Direction.localRotation.eulerAngles;
+        //diff = new Vector3(Mathf.Abs(diff.x), Mathf.Abs(diff.y), Mathf.Abs(diff.z));
+        b.CurrentPart.transform.localRotation = b.Direction.localRotation;//Quaternion.Euler(diff);
     }
 
     private static void ShuffleParts(List<HumanPartSlot> slots)
