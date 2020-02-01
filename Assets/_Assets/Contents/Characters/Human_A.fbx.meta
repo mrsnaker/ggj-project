@@ -9,7 +9,22 @@ ModelImporter:
   - first:
       74: -8051143547618049463
     second: Human_A_Armature|Armature|mixamo.com|Layer0.001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DefaultCharacter
+    second: {fileID: 2100000, guid: aacaccd62980c3c468f47c7910c23b27, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyeball
+    second: {fileID: 2100000, guid: 0a6c4f54d882da9408a5e39fe507eecf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cornea
+    second: {fileID: 2100000, guid: 8fa7be02ca0a51f409483c6989d0fd33, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
