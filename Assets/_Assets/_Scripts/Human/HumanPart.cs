@@ -7,7 +7,11 @@ public class HumanPart : MonoBehaviour
     [SerializeField] private HumanPartSize _size;
     [SerializeField] private int _id;
     [SerializeField] private Transform _direction;
-    public int ID => _id;
+    public int ID
+    {
+        get => _id;
+        set => _id = value;
+    }
     public HumanPartSize Size => _size;
     public Transform Direction => _direction ? _direction : transform.Find("Direction");
 }

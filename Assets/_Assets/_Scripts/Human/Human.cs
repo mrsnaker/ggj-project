@@ -27,6 +27,7 @@ public class Human : MonoBehaviour
         for (int i = 0; i < _humanParts.Count; i++)
         {
             var humanPart = _humanParts[i];
+            humanPart.ID = i;
             var humanSlot = Instantiate(_humanPartSlotPrefab);
             humanSlot.name = humanPart.name + "Slot";
             humanSlot.ID = humanPart.ID;
@@ -50,7 +51,9 @@ public class Human : MonoBehaviour
 
         var randomSlot1 = Random.Range(0, _humanSlots[HumanPartSize.Big].Count);
         var randomSlot2 = (randomSlot1 + Random.Range(1, _humanSlots[HumanPartSize.Big].Count)) % _humanSlots[HumanPartSize.Big].Count;
-        SwapParts(_humanSlots[HumanPartSize.Big][randomSlot1], _humanSlots[HumanPartSize.Big][randomSlot2]);
+        //Debug.Log(randomSlot1 + " " + randomSlot2);
+        //SwapParts(_humanSlots[HumanPartSize.Big][randomSlot1], _humanSlots[HumanPartSize.Big][randomSlot2]);
+        SwapParts(_humanSlots[HumanPartSize.Big][1], _humanSlots[HumanPartSize.Big][2]);
         //ShuffleParts(_humanPartSlots);
     }
 
