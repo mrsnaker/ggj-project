@@ -150,6 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd3b4e9caad03e4ba9ed02aefc8b389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dnaCamera: {fileID: 1816448168}
+  _clientCamera: {fileID: 1229881669}
 --- !u!4 &269830951
 Transform:
   m_ObjectHideFlags: 0
@@ -291,8 +293,8 @@ Camera:
   m_GameObject: {fileID: 1229881667}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.5, g: 0.5, b: 0.5, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -306,8 +308,8 @@ Camera:
     width: 1
     height: 0.75
   near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  far clip plane: 100
+  field of view: 55
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -349,7 +351,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1816448169}
   - component: {fileID: 1816448168}
-  - component: {fileID: 1816448167}
   m_Layer: 0
   m_Name: DNACamera
   m_TagString: MainCamera
@@ -357,14 +358,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1816448167
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1816448166}
-  m_Enabled: 1
 --- !u!20 &1816448168
 Camera:
   m_ObjectHideFlags: 0
@@ -374,8 +367,8 @@ Camera:
   m_GameObject: {fileID: 1816448166}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -388,11 +381,11 @@ Camera:
     y: 0.75
     width: 1
     height: 0.25
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0
+  far clip plane: 20
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 1
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -416,7 +409,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816448166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 8, z: -10}
+  m_LocalPosition: {x: 0, y: 100, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
