@@ -11,6 +11,13 @@ namespace DNA
             get => _id;
             set => _id = value;
         }
+        
+        [SerializeField] private int _idPartHuman = 0;
+        public int IDPartHuman
+        {
+            get => _idPartHuman;
+            set => _idPartHuman = value;
+        }
 
         [SerializeField] private Slot _slot;
         public Slot Slot

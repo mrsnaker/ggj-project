@@ -159,6 +159,7 @@ namespace DNA
                 var dnaComp = dna.GetComponent<DNA>();
                 dnaComp.ID = _slotsList[i].ID;
                 dnaComp.Slot = _slotsList[i];
+                dnaComp.IDPartHuman = _dnaCompare[i].IdPartHuman;
                 _slotsList[i].DNA = dnaComp;
                 _dnaList.Add(dnaComp);
             }

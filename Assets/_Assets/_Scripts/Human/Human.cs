@@ -3,26 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
+using DNA;
 
 public class Human : MonoBehaviour
 {
     private static Human _instance;
-    public static Human Instance => _instance ? _instance : FindObjectOfType<Human>();
+    private static Human Instance => _instance ? _instance : _instance = FindObjectOfType<Human>();
 
     [SerializeField] private HumanPartSlot _humanPartSlotPrefab;
     [SerializeField] private List<HumanPart> _humanParts;
+    public static List<HumanPart> HumanParts => Instance._humanParts;
     [SerializeField] private Dictionary<HumanPartSize, List<HumanPartSlot>> _humanSlots = new Dictionary<HumanPartSize, List<HumanPartSlot>>();
+    public static Dictionary<HumanPartSize, List<HumanPartSlot>> HumanSlots => Instance._humanSlots;
 
     [SerializeField] private SkinnedMeshRenderer _chest;
 
     private static System.Random rng = new System.Random();
     private Sequence _chestAnimation;
+    public static Transform HumanTransform => Instance.transform;
 
     private void Awake()
     {
         _chestAnimation = StartChestAnimation();
-        _humanParts = new List<HumanPart>();
-        _humanParts = GetComponentsInChildren<HumanPart>().ToList();
 
         for (int i = 0; i < _humanParts.Count; i++)
         {
@@ -49,11 +51,16 @@ public class Human : MonoBehaviour
             _humanSlots[humanSlot.Size].Add(humanSlot);
         }
 
+        for (int i = 0; i < DNAManager.DNAList.Count; i++)
+        {
+            //HumanParts[DNAManager.DNAList[i].IDPartHuman]
+        }
+
         var randomSlot1 = Random.Range(0, _humanSlots[HumanPartSize.Big].Count);
         var randomSlot2 = (randomSlot1 + Random.Range(1, _humanSlots[HumanPartSize.Big].Count)) % _humanSlots[HumanPartSize.Big].Count;
         //Debug.Log(randomSlot1 + " " + randomSlot2);
         //SwapParts(_humanSlots[HumanPartSize.Big][randomSlot1], _humanSlots[HumanPartSize.Big][randomSlot2]);
-        SwapParts(_humanSlots[HumanPartSize.Big][1], _humanSlots[HumanPartSize.Big][2]);
+        //SwapParts(_humanSlots[HumanPartSize.Big][1], _humanSlots[HumanPartSize.Big][2]);
         //ShuffleParts(_humanPartSlots);
     }
 
@@ -76,9 +83,9 @@ public class Human : MonoBehaviour
         return Instance._humanSlots[part.Size].Find(p => p.ID == part.ID);
     }
 
-    private static HumanPartSlot GetCurrentSlotFromPart(HumanPart part)
+    public static HumanPartSlot GetCurrentSlotFromPart(HumanPart part)
     {
-        return Instance._humanSlots[part.Size].Find(ps => ps.CurrentPart == part);
+        return HumanSlots[part.Size].Find(ps => ps.CurrentPart.Equals(part));
     }
 
     private static HumanPart GetRightPartFromSlot(HumanPartSlot partSlot)
@@ -91,7 +98,7 @@ public class Human : MonoBehaviour
         return Instance._humanParts.Find(p => p == partSlot.CurrentPart);
     }
 
-    private static void SwapParts(HumanPartSlot a, HumanPartSlot b)
+    public static void SwapParts(HumanPartSlot a, HumanPartSlot b)
     {
         Debug.Log(a.name + "--" + b.name);
         if (a.Size != b.Size) return;
@@ -127,4 +134,14 @@ public class Human : MonoBehaviour
             SwapParts(slots[k], slots[n]);
         }
     }
+    
+    #if UNITY_EDITOR
+
+    public void SetHumanParts()
+    {
+        _humanParts = new List<HumanPart>();
+        _humanParts = GetComponentsInChildren<HumanPart>().ToList();
+    }
+
+#endif
 }
