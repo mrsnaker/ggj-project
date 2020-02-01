@@ -1,12 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace DNA
 {
     public class Slot : MonoBehaviour
     {
-        private DNA _dna;
+        [SerializeField] private int _id;
+        public int ID
+        {
+            get => _id;
+            set => _id = value;
+        }
+
+        [SerializeField] private DNA _dna;
         public DNA DNA
         {
             get => _dna;
