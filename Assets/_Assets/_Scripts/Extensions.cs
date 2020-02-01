@@ -3,8 +3,7 @@ using UnityEngine;
 
 public enum GameState
 {
-    FirstStage,
-    SecondStage,
+    PlayStage,
     CalculateResult,
     LoadingNextLevel,
 }
@@ -25,9 +24,13 @@ public static class Extension
         newSlot.DNA.ResetSmoothPos();
     }
 
-    public static bool CheckBorderViewForDNA(this Transform transform, int dir)
+    public static bool CheckBorderViewForDNA(this Transform transform, float dir, Vector3 newPos)
     {
-        if ((Screen.width - 15f) < GameManager.DNACamera.WorldToScreenPoint(transform.position).x) return false;
-        return (15f < GameManager.DNACamera.WorldToScreenPoint(transform.position).x);
+        if ((Screen.width * 0.9f < GameManager.DNACamera.WorldToScreenPoint(transform.position).x))
+            if(dir >= 0 || GameManager.DNACamera.WorldToScreenPoint(newPos).x > Screen.width * 0.9f) return false;
+
+        if (Screen.width * 0.1f > GameManager.DNACamera.WorldToScreenPoint(transform.position).x)
+            if(dir <= 0 || GameManager.DNACamera.WorldToScreenPoint(newPos).x < Screen.width * 0.1f) return false;
+        return true;
     }
 }
