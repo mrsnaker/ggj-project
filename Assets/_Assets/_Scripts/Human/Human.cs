@@ -22,8 +22,8 @@ public class Human : MonoBehaviour
     private Sequence _chestAnimation;
     public static Transform HumanTransform => Instance.transform;
 
-    private int _currentPart1 = 0;
-    private int _currentPart2 = 1;
+    private int _currentPart1 = -1;
+    private int _currentPart2 = -1;
 
     private void Awake()
     {
@@ -33,6 +33,8 @@ public class Human : MonoBehaviour
         {
             var humanPart = _humanParts[i];
             humanPart.ID = i;
+            humanPart.OriginalPos = humanPart.transform.localPosition;
+            humanPart.OriginalRotation = humanPart.transform.localRotation;
             var humanSlot = Instantiate(_humanPartSlotPrefab);
             humanSlot.name = humanPart.name + "Slot";
             humanSlot.ID = humanPart.ID;
@@ -69,9 +71,18 @@ public class Human : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            SwapParts(_humanSlots[HumanPartSize.Big][1], _humanSlots[HumanPartSize.Big][2]);
+            if(_currentPart1 !=-1 && _currentPart2!=-1)
+            {
+                SwapParts(_humanSlots[HumanPartSize.Big][_currentPart1], _humanSlots[HumanPartSize.Big][_currentPart2]);
+            }
+            _currentPart1 = Random.Range(0, _humanSlots[HumanPartSize.Big].Count);
+            _currentPart2 = (_currentPart1 + Random.Range(1, _humanSlots[HumanPartSize.Big].Count)) % _humanSlots[HumanPartSize.Big].Count;
+            //Debug.Log(_currentPart1 + " " + _currentPart2);
+            _currentPart1 = 0;
+            _currentPart2 = 2;
+            SwapParts(_humanSlots[HumanPartSize.Big][_currentPart1], _humanSlots[HumanPartSize.Big][_currentPart2]);
         }
     }
 
@@ -111,28 +122,45 @@ public class Human : MonoBehaviour
 
     public static void SwapParts(HumanPartSlot a, HumanPartSlot b)
     {
-        Debug.Log(a.name + "--" + b.name);
+        //Debug.Log(a.name + "--" + b.name);
         if (a.Size != b.Size) return;
+        if (a.ID == b.ID) return;
         var temp = a.CurrentPart;
         a.CurrentPart = b.CurrentPart;
         a.CurrentPart.transform.parent = a.transform;
         a.CurrentPart.transform.localPosition = Vector3.zero;
         a.CurrentPart.transform.localRotation = Quaternion.identity;
+        b.CurrentPart.transform.parent = a.transform;
 
-        var diff = a.Direction.localRotation.eulerAngles - a.CurrentPart.Direction.localRotation.eulerAngles;
-        //diff = a.CurrentPart.Direction.localRotation.eulerAngles - a.Direction.localRotation.eulerAngles;
-        //diff = new Vector3(Mathf.Abs(diff.x), Mathf.Abs(diff.y), Mathf.Abs(diff.z));
-        a.CurrentPart.transform.localRotation = a.Direction.localRotation;//Quaternion.Euler(diff);
-
+        if (a.CurrentPart.ID == a.ID)
+        {
+            a.CurrentPart.transform.localPosition = Vector3.zero;
+            a.CurrentPart.transform.localRotation = Quaternion.identity;
+        }
+        else
+        {
+            //if(a.CurrentPart.Direction.localRotation.y <= 90)
+            //    a.CurrentPart.transform.localRotation = a.Direction.localRotation;
+            //else a.CurrentPart.transform.localRotation = Quaternion.Inverse(a.Direction.localRotation);
+            a.CurrentPart.transform.localRotation = Quaternion.FromToRotation(a.CurrentPart.transform.localRotation.eulerAngles, a.Direction.localRotation.eulerAngles);
+        }
+        
         b.CurrentPart = temp;
         b.CurrentPart.transform.parent = b.transform;
         b.CurrentPart.transform.localPosition = Vector3.zero;
         b.CurrentPart.transform.localRotation = Quaternion.identity;
 
-        diff = b.Direction.localRotation.eulerAngles - b.CurrentPart.Direction.localRotation.eulerAngles;
-        //diff = b.CurrentPart.Direction.localRotation.eulerAngles - b.Direction.localRotation.eulerAngles;
-        //diff = new Vector3(Mathf.Abs(diff.x), Mathf.Abs(diff.y), Mathf.Abs(diff.z));
-        b.CurrentPart.transform.localRotation = b.Direction.localRotation;//Quaternion.Euler(diff);
+        if (b.CurrentPart.ID == b.ID)
+        {
+            b.CurrentPart.transform.localPosition = Vector3.zero;
+            b.CurrentPart.transform.localRotation = Quaternion.identity;
+        }
+        else
+        {
+
+            b.CurrentPart.transform.localRotation = b.Direction.localRotation;
+            b.CurrentPart.transform.localRotation = Quaternion.FromToRotation(b.CurrentPart.transform.localRotation.eulerAngles, b.Direction.localRotation.eulerAngles);
+        }
     }
 
     private static void ShuffleParts(List<HumanPartSlot> slots)
