@@ -33,6 +33,10 @@ public class Human : MonoBehaviour
     public static Transform HumanTransform => Instance.transform;
     public static List<BlendShapeParameter> StageBParameters => Instance._stageBParameters;
 
+    private float _voiceTimer = 10f;
+
+    [SerializeField] private List<AudioClip> _voices = new List<AudioClip>();
+
     private void Awake()
     {
         _chestAnimation = StartChestAnimation();
@@ -79,11 +83,19 @@ public class Human : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            OpenMouth(1f);
-            EnableStageBHuman();
-        }
+        if (_voiceTimer >= 0) _voiceTimer -= Time.deltaTime;
+
+        _voiceTimer = Random.Range(5f,10f);
+        PlayVoice();
+    }
+
+    public static void PlayVoice()
+    {
+        //playsound
+        if (Instance._voices.Count <= 0) return;
+        var randomVoice = Instance._voices[Random.Range(0, Instance._voices.Count)];
+        GameManager.VoicesAudioSource.clip = randomVoice;
+        Instance.OpenMouth(randomVoice.length);
     }
 
     public static void EnableStageBHuman()
@@ -115,11 +127,13 @@ public class Human : MonoBehaviour
 
     public Sequence OpenMouth(float duration)
     {
+        var loopsCount = Mathf.RoundToInt(duration);
         var randomMouthOpenValue = Random.Range(80, 100);
         return DOTween.Sequence()
             .AppendCallback(() => { _mouth.SetBlendShapeWeight(0, 0); })
-            .Append(DOTween.To(() => _mouth.GetBlendShapeWeight(0), x => _mouth.SetBlendShapeWeight(0, x), randomMouthOpenValue, duration / 2))
-            .Append(DOTween.To(() => _mouth.GetBlendShapeWeight(0), x => _mouth.SetBlendShapeWeight(0, x), 0f, duration / 2));
+            .Append(DOTween.To(() => _mouth.GetBlendShapeWeight(0), x => _mouth.SetBlendShapeWeight(0, x), randomMouthOpenValue, 0.5f))
+            .Append(DOTween.To(() => _mouth.GetBlendShapeWeight(0), x => _mouth.SetBlendShapeWeight(0, x), 0f, 0.5f))
+            .SetLoops(loopsCount);
     }
 
     private static HumanPartSlot GetRightSlotFromPart(HumanPart part)

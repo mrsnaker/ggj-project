@@ -16,6 +16,9 @@ namespace DNA
         [SerializeField] private Camera _clientCamera;
         public static Camera ClientCamera => Instance._clientCamera;
 
+        [SerializeField] private AudioSource _voicesAudioSource;
+        public static AudioSource VoicesAudioSource => Instance._voicesAudioSource;
+
         [SerializeField] private float _speedRotateDNA;
         public static float SpeedRotateDNA => Instance._speedRotateDNA;
         [SerializeField] private ResultPanel _resultPanel;
