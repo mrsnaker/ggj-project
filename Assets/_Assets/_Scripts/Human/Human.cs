@@ -83,7 +83,11 @@ public class Human : MonoBehaviour
 
     private void Update()
     {
-        if (_voiceTimer >= 0) _voiceTimer -= Time.deltaTime;
+        if (_voiceTimer >= 0)
+        {
+            _voiceTimer -= Time.deltaTime;
+            return;
+        }
 
         _voiceTimer = Random.Range(5f,10f);
         PlayVoice();
@@ -95,6 +99,7 @@ public class Human : MonoBehaviour
         if (Instance._voices.Count <= 0) return;
         var randomVoice = Instance._voices[Random.Range(0, Instance._voices.Count)];
         GameManager.VoicesAudioSource.clip = randomVoice;
+        GameManager.VoicesAudioSource.Play();
         Instance.OpenMouth(randomVoice.length);
     }
 
