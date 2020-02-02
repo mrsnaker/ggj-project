@@ -25,6 +25,29 @@
             <e p="Slot.cs" t="Include" />
           </e>
         </e>
+        <e p="AssetStoreOriginals" t="Include">
+          <e p="_SNAPS_PrototypingAssets" t="Include">
+            <e p="About" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="Editor" t="Include">
+                  <e p="ReadmeEditor.cs" t="Include" />
+                </e>
+                <e p="Readme.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Scripts" t="Include">
+              <e p="Editor" t="Include">
+                <e p="PackageChecker" t="Include">
+                  <e p="PackageChecker.cs" t="Include" />
+                  <e p="PackageImportList.txt" t="Include" />
+                  <e p="settings" t="Include">
+                    <e p="PackageImportList_ShaderGraph.txt" t="Include" />
+                  </e>
+                </e>
+              </e>
+            </e>
+          </e>
+        </e>
         <e p="Demigiant" t="Include">
           <e p="DOTween" t="Include">
             <e p="Modules" t="Include">
