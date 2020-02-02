@@ -58,7 +58,7 @@ namespace DNA
             {
                 switch (GameManager.NowStepLevel)
                 {
-                    case GameState.PlayStageA:
+                    case GameState.PlayStageB:
                         _isRotate = true;
                         _lastRotY = Input.mousePosition.y;
                         break;
@@ -98,7 +98,7 @@ namespace DNA
             {
                 switch (GameManager.NowStepLevel)
                 {
-                    case GameState.PlayStageA:
+                    case GameState.PlayStageB:
                         _isRotate = false;
                         _lastRotY = 0f;
                         break;

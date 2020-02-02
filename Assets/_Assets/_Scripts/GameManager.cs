@@ -1,6 +1,7 @@
 ﻿using System;
 using DNA.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DNA
 {
@@ -20,9 +21,16 @@ namespace DNA
         [SerializeField] private ResultPanel _resultPanel;
         public static ResultPanel ResultPanel => Instance._resultPanel;
 
-        private static int _nowLevelID = 0;
-        public static GameState NowStepLevel { get; private set; } = 0;
+        public static int NowLevelID = 0;
+        public static GameState NowStepLevel { get; set; } = GameState.PlayStageA;
+        
+        private static float _timerGame = 0f;
 
+        private void Awake()
+        {
+            LoadNextLevel();
+        }
+        
         private void OnEnable()
         {
             GlobalEvents<OnNextLevelLoad>.Happened += NextLevelLoaded;
@@ -33,9 +41,25 @@ namespace DNA
             GlobalEvents<OnNextLevelLoad>.Happened -= NextLevelLoaded;
         }
 
+        private void Update()
+        {
+            if (NowStepLevel == GameState.PlayStageA || NowStepLevel == GameState.PlayStageB)
+            {
+                _timerGame += Time.unscaledDeltaTime;
+                
+            }
+        }
+
         private void NextLevelLoaded(OnNextLevelLoad obj)
         {
-            
+            _timerGame = 0f;
+        }
+
+        public static void LoadNextLevel()
+        {
+            NowLevelID++;
+            SceneManager.LoadSceneAsync(NowLevelID);
+            if(NowLevelID > 1) SceneManager.UnloadSceneAsync(NowLevelID - 1);
         }
 
         public void CheckResultButton()
