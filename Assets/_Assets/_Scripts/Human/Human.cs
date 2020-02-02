@@ -10,6 +10,9 @@ public class Human : MonoBehaviour
     private static Human _instance;
     private static Human Instance => _instance ? _instance : _instance = FindObjectOfType<Human>();
 
+    [SerializeField] private GameObject _humanStageA;
+    [SerializeField] private GameObject _humanStageB;
+
     [SerializeField] private HumanPartSlot _humanPartSlotPrefab;
     [SerializeField] private List<HumanPart> _humanParts;
     public static List<HumanPart> HumanParts => Instance._humanParts;
@@ -17,13 +20,15 @@ public class Human : MonoBehaviour
     public static Dictionary<HumanPartSize, List<HumanPartSlot>> HumanSlots => Instance._humanSlots;
 
     [SerializeField] private SkinnedMeshRenderer _chest;
+    [SerializeField] private SkinnedMeshRenderer _mouth;
+
+    [SerializeField] private SkinnedMeshRenderer _chestStageB;
+    [SerializeField] private SkinnedMeshRenderer _mouthStageB;
+    [SerializeField] private SkinnedMeshRenderer _noseStageB;
 
     private static System.Random rng = new System.Random();
     private Sequence _chestAnimation;
     public static Transform HumanTransform => Instance.transform;
-
-    private int _currentPart1 = -1;
-    private int _currentPart2 = -1;
 
     private void Awake()
     {
@@ -73,17 +78,21 @@ public class Human : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if(_currentPart1 !=-1 && _currentPart2!=-1)
-            {
-                SwapParts(_humanSlots[HumanPartSize.Big][_currentPart1], _humanSlots[HumanPartSize.Big][_currentPart2]);
-            }
-            _currentPart1 = Random.Range(0, _humanSlots[HumanPartSize.Big].Count);
-            _currentPart2 = (_currentPart1 + Random.Range(1, _humanSlots[HumanPartSize.Big].Count)) % _humanSlots[HumanPartSize.Big].Count;
-            //Debug.Log(_currentPart1 + " " + _currentPart2);
-            _currentPart1 = 0;
-            _currentPart2 = 2;
-            SwapParts(_humanSlots[HumanPartSize.Big][_currentPart1], _humanSlots[HumanPartSize.Big][_currentPart2]);
+            OpenMouth(1f);
+            EnableStageBHuman();
         }
+    }
+
+    private void EnableStageBHuman()
+    {
+        _chestStageB.SetBlendShapeWeight(0, _chest.GetBlendShapeWeight(0));
+        _chestStageB.SetBlendShapeWeight(1, _chest.GetBlendShapeWeight(1));
+        _mouthStageB.SetBlendShapeWeight(0, _mouth.GetBlendShapeWeight(0));
+        _mouthStageB.SetBlendShapeWeight(1, _mouth.GetBlendShapeWeight(1));
+
+        _humanStageA.SetActive(false);
+        _humanStageB.SetActive(true);
+
     }
 
     private Sequence StartChestAnimation()
@@ -98,6 +107,15 @@ public class Human : MonoBehaviour
     private void StopChestAnimation()
     {
         _chestAnimation.Complete();
+    }
+
+    public Sequence OpenMouth(float duration)
+    {
+        var randomMouthOpenValue = Random.Range(80, 100);
+        return DOTween.Sequence()
+            .AppendCallback(() => { _mouth.SetBlendShapeWeight(0, 0); })
+            .Append(DOTween.To(() => _mouth.GetBlendShapeWeight(0), x => _mouth.SetBlendShapeWeight(0, x), randomMouthOpenValue, duration / 2))
+            .Append(DOTween.To(() => _mouth.GetBlendShapeWeight(0), x => _mouth.SetBlendShapeWeight(0, x), 0f, duration / 2));
     }
 
     private static HumanPartSlot GetRightSlotFromPart(HumanPart part)
@@ -139,10 +157,7 @@ public class Human : MonoBehaviour
         }
         else
         {
-            //if(a.CurrentPart.Direction.localRotation.y <= 90)
-            //    a.CurrentPart.transform.localRotation = a.Direction.localRotation;
-            //else a.CurrentPart.transform.localRotation = Quaternion.Inverse(a.Direction.localRotation);
-            a.CurrentPart.transform.localRotation = Quaternion.FromToRotation(a.CurrentPart.transform.localRotation.eulerAngles, a.Direction.localRotation.eulerAngles);
+            a.CurrentPart.transform.localRotation = a.Direction.localRotation;
         }
         
         b.CurrentPart = temp;
@@ -157,9 +172,7 @@ public class Human : MonoBehaviour
         }
         else
         {
-
             b.CurrentPart.transform.localRotation = b.Direction.localRotation;
-            b.CurrentPart.transform.localRotation = Quaternion.FromToRotation(b.CurrentPart.transform.localRotation.eulerAngles, b.Direction.localRotation.eulerAngles);
         }
     }
 
