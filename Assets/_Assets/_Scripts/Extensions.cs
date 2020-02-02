@@ -16,9 +16,11 @@ public enum GameState
 public class CompareSlotDNA
 {
     [SerializeField] private int _idPartHuman;
-    [Range(0,100)] [SerializeField] private float _rotateAngle;
+    [SerializeField] private int _idBlend;
+    [Range(0, 100)] [SerializeField] private float _endBlendValue;
     public int IdPartHuman => _idPartHuman;
-    public float RotateAngle => _rotateAngle;
+    public int IdBlend => _idBlend;
+    public float EndBlendValue => _endBlendValue;
 }
 
 public static class Extension

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using DNA.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -37,20 +38,6 @@ namespace DNA
         {
             CalcCameraSize();
             RandomDNA();
-            //CheckHumanParts();
-        }
-
-        private void CheckHumanParts()
-        {
-            /*for (int i = 0; i < DNAList.Count; i++)
-            {
-                var idPart1 = DNAList[i].IDPartHuman;
-                var idSlot = DNAList[i].Slot.ID;
-                var idPart2 = DNAList[idSlot].IDPartHuman;
-                var slot1 = Human.GetCurrentSlotFromPart(Human.HumanParts[idPart1]);
-                var slot2 = Human.GetCurrentSlotFromPart(Human.HumanParts[idPart2]);
-                Human.SwapParts(slot1, slot2);
-            }*/
         }
 
         public static void CheckNewDNAPos(DNA inDNA)
@@ -82,12 +69,16 @@ namespace DNA
         public static void CheckResult()
         {
             var allScore = 0f;
-            var score = 1f / Instance._dnaList.Count;
+            var score = 0.5f / Instance._dnaList.Count;
             for (int i = 0; i < DNAList.Count; i++)
             {
-                if (i == Instance._slotsList[i].DNA.ID) allScore += score;
+                if (i == Instance._slotsList[i].DNA.ID)
+                {
+                    allScore += score;
+                }
             }
-            Debug.Log("Score: " + Mathf.RoundToInt(allScore * 100f));
+
+            GameManager.ResultPanel.Result(allScore);
         }
 
         public static void RandomDNA()
