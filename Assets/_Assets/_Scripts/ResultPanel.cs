@@ -26,8 +26,8 @@ namespace DNA.UI
             else if (result <= 0.7f) numSprite = 1;
             else if (result <= 0.8f) numSprite = 2;
             else numSprite = 3;
-            _medalsImage.sprite = _medalsSprites[numSprite];
             
+            _medalsImage.sprite = _medalsSprites[numSprite];
             _nextLeveButton.SetActive(GameManager.NowLevelID < 3);
         }
 
