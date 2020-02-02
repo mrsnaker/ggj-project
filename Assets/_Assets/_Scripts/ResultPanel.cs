@@ -1,15 +1,17 @@
 ﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace DNA.UI
 {
     public class ResultPanel : MonoBehaviour
     {
+        [SerializeField] private Sprite[] _medalsSprites;
         [SerializeField] private Image _foregroundSlider;
         [SerializeField] private TextMeshProUGUI _resultText;
+        [SerializeField] private Image _medalsImage;
+        [SerializeField] private GameObject _nextLeveButton;
 
         public void Result(float result)
         {
@@ -17,7 +19,15 @@ namespace DNA.UI
             _foregroundSlider.DOFillAmount(result, 1f);
             var value = 0f;
             var target = Mathf.RoundToInt(result * 100);
-            DOTween.To(() => value, x => value = x, target, 1f).OnUpdate(() => _resultText.SetText(value + "%"));
+            DOTween.To(() => value, x => value = x, target, 1f).OnUpdate(() => _resultText.SetText(Mathf.RoundToInt(value) + "%"));
+            var numSprite = 0;
+            if (result < 0.6f) numSprite = 0;
+            else if (result <= 0.7f) numSprite = 1;
+            else if (result <= 0.8f) numSprite = 2;
+            else numSprite = 3;
+            _medalsImage.sprite = _medalsSprites[numSprite];
+            
+            _nextLeveButton.SetActive(GameManager.NowLevelID < 3);
         }
 
         public void NextLevelButton()
