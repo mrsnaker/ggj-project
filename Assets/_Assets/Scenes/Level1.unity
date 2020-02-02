@@ -324,7 +324,7 @@ MonoBehaviour:
     _idBlend: -1
     _endBlendValue: 0
   - _idPartHuman: 8
-    _idBlend: 8
+    _idBlend: 6
     _endBlendValue: 0
   _dnaList:
   - {fileID: 601556821}
