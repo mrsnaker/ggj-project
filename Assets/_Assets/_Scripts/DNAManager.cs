@@ -10,6 +10,7 @@ namespace DNA
         private static DNAManager Instance => _instance ? _instance : _instance = FindObjectOfType<DNAManager>();
 
         [SerializeField] private float _timerOnLevel = 300f;
+        public static float TimerOnLevel => Instance._timerOnLevel;
         [SerializeField] private GameObject _dnaPrefab;
         [SerializeField] private List<CompareSlotDNA> _dnaCompare;
         public static List<CompareSlotDNA> DNACompare => Instance._dnaCompare;
@@ -94,7 +95,6 @@ namespace DNA
                 }
             }
             
-            GameManager.ResultPanel.gameObject.SetActive(true);
             GameManager.ResultPanel.Result(allScore);
         }
 
