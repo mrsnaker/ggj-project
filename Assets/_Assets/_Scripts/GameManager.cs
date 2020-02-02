@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using DNA.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -40,7 +41,7 @@ namespace DNA
 
         private void Awake()
         {
-            LoadNextLevel();
+            StartCoroutine(LoadNextLevel());
         }
         
         private void OnEnable()
@@ -71,17 +72,21 @@ namespace DNA
                 case GameState.PlayStageA:
                     MainPanel.CheckButton.gameObject.SetActive(false);
                     MainPanel.StageText.SetText("Stage A");
+                    MainPanel.PhotoPanelState(false, true);
                     break;
                 case GameState.PlayStageB:
                     MainPanel.CheckButton.gameObject.SetActive(true);
                     MainPanel.StageText.SetText("Stage B");
+                    MainPanel.PhotoPanelState(true);
                     break;
                 case GameState.CalculateResult:
                     MainPanel.CheckButton.gameObject.SetActive(false);
                     ResultPanel.gameObject.SetActive(true);
                     MainPanel.StageText.SetText("Result");
+                    MainPanel.PhotoPanelState(false);
                     break;
                 case GameState.LoadingNextLevel:
+                    MainPanel.PhotoPanelState(false);
                     ResultPanel.gameObject.SetActive(false);
                     break;
                 default:
@@ -94,11 +99,12 @@ namespace DNA
             _timerGame = 0f;
         }
 
-        public static void LoadNextLevel()
+        public static IEnumerator LoadNextLevel()
         {
             NowLevelID++;
-            SceneManager.LoadSceneAsync(NowLevelID, LoadSceneMode.Additive);
-            NowStepLevel = GameState.PlayStageA;
+            var async = SceneManager.LoadSceneAsync(NowLevelID, LoadSceneMode.Additive);
+            yield return new WaitUntil(() => async.isDone);
+            NowStepLevel = NowLevelID == 1 ? GameState.LoadingNextLevel : GameState.PlayStageA;
             if(NowLevelID > 1) SceneManager.UnloadSceneAsync(NowLevelID - 1);
         }
 

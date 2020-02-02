@@ -311,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timerOnLevel: 300
+  _photoPanel: {fileID: 980867223}
   _dnaPrefab: {fileID: 6450039812087054053, guid: ed3cd1dd0311d9c42b004198e200c8dc,
     type: 3}
   _dnaCompare:

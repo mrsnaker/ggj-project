@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +20,7 @@ namespace DNA.UI
             _foregroundSlider.DOFillAmount(result, 1f);
             var value = 0f;
             var target = Mathf.RoundToInt(result * 100);
-            DOTween.To(() => value, x => value = x, target, 1f).OnUpdate(() => _resultText.SetText(Mathf.RoundToInt(value) + "%"));
+            DOTween.To(() => value, x => value = x, target, 1f).OnUpdate(() => _resultText.SetText(Math.Round(value, 1) + "%"));
             var numSprite = 0;
             if (result < 0.6f) numSprite = 0;
             else if (result <= 0.7f) numSprite = 1;
@@ -33,7 +34,7 @@ namespace DNA.UI
         public void NextLevelButton()
         {
             GameManager.NowStepLevel = GameState.LoadingNextLevel;
-            GameManager.LoadNextLevel();
+            StartCoroutine(GameManager.LoadNextLevel());
         }
     }
 }
