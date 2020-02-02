@@ -44,7 +44,7 @@ namespace DNA
 
         private void Awake()
         {
-            StartCoroutine(LoadNextLevel());
+            LoadNextLevel();
         }
         
         private void OnEnable()
@@ -102,7 +102,9 @@ namespace DNA
             _timerGame = 0f;
         }
 
-        public static IEnumerator LoadNextLevel()
+        public static void LoadNextLevel() => Instance.StartCoroutine(LoadLevel());
+
+        private static IEnumerator LoadLevel()
         {
             NowLevelID++;
             var async = SceneManager.LoadSceneAsync(NowLevelID, LoadSceneMode.Additive);

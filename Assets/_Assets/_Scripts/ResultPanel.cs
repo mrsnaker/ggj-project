@@ -34,7 +34,7 @@ namespace DNA.UI
         public void NextLevelButton()
         {
             GameManager.NowStepLevel = GameState.LoadingNextLevel;
-            StartCoroutine(GameManager.LoadNextLevel());
+            GameManager.LoadNextLevel();
         }
     }
 }
