@@ -86,16 +86,16 @@ public class Human : MonoBehaviour
         }
     }
 
-    private void EnableStageBHuman()
+    public static void EnableStageBHuman()
     {
-        for (int i = 0; i < _stageBParameters.Count; i++)
+        for (int i = 0; i < StageBParameters.Count; i++)
         {
-            var par = _stageBParameters[i];
+            var par = StageBParameters[i];
             par.StageBMeshRenderer.SetBlendShapeWeight(par.BlendShapeIndex, par.StageAMeshRenderer.GetBlendShapeWeight(par.BlendShapeIndex));
         }
 
-        _humanStageA.SetActive(false);
-        _humanStageB.SetActive(true);
+        Instance._humanStageA.SetActive(false);
+        Instance._humanStageB.SetActive(true);
 
     }
 

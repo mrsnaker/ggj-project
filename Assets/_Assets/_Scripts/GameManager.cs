@@ -58,7 +58,7 @@ namespace DNA
         public static void LoadNextLevel()
         {
             NowLevelID++;
-            SceneManager.LoadSceneAsync(NowLevelID);
+            SceneManager.LoadSceneAsync(NowLevelID, LoadSceneMode.Additive);
             if(NowLevelID > 1) SceneManager.UnloadSceneAsync(NowLevelID - 1);
         }
 

@@ -12,6 +12,7 @@ namespace DNA
         [SerializeField] private float _timerOnLevel = 300f;
         [SerializeField] private GameObject _dnaPrefab;
         [SerializeField] private List<CompareSlotDNA> _dnaCompare;
+        public static List<CompareSlotDNA> DNACompare => Instance._dnaCompare;
         [SerializeField] private List<DNA> _dnaList = new List<DNA>();
         [SerializeField] private List<Slot> _slotsList = new List<Slot>();
         [SerializeField] private float _orthographicSize;
@@ -51,8 +52,7 @@ namespace DNA
             }
 
             inDNA.Slot.ChangeDNASlots(slot);
-            
-            
+            Instance.CheckStageA();
         }
 
         private void Update()
@@ -63,6 +63,22 @@ namespace DNA
         private void RotateAllDNAs()
         {
             transform.Rotate(GameManager.SpeedRotateDNA * Time.deltaTime, 0f, 0f);
+        }
+
+        private void CheckStageA()
+        {
+            var count = 0;
+            for (int i = 0; i < DNAList.Count; i++)
+            {
+                if (i == Instance._slotsList[i].DNA.ID)
+                    count++;
+            }
+
+            if (count >= DNAList.Count)
+            {
+                GameManager.NowStepLevel = GameState.PlayStageB;
+                Human.EnableStageBHuman();
+            }
         }
 
         public static void CheckResult()

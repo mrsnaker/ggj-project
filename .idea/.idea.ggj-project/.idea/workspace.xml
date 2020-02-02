@@ -38,10 +38,10 @@
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/CameraControl.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Extensions.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/ResultPanel.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/MainUIPanel.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/DNAManager.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/DNA.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/DNAManager.cs" />
       </list>
     </option>
   </component>
@@ -95,7 +95,7 @@
       <updated>1580547718578</updated>
       <workItem from="1580547725061" duration="26713000" />
       <workItem from="1580587768881" duration="60000" />
-      <workItem from="1580587859450" duration="13764000" />
+      <workItem from="1580587859450" duration="14289000" />
     </task>
     <servers />
   </component>
