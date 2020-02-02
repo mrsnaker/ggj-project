@@ -26,9 +26,12 @@ public class Human : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer _mouthStageB;
     [SerializeField] private SkinnedMeshRenderer _noseStageB;
 
+    [SerializeField] private List<BlendShapeParameter> _stageBParameters;
+
     private static System.Random rng = new System.Random();
     private Sequence _chestAnimation;
     public static Transform HumanTransform => Instance.transform;
+    public static List<BlendShapeParameter> StageBParameters => Instance._stageBParameters;
 
     private void Awake()
     {
@@ -83,15 +86,16 @@ public class Human : MonoBehaviour
         }
     }
 
-    private void EnableStageBHuman()
+    public static void EnableStageBHuman()
     {
-        _chestStageB.SetBlendShapeWeight(0, _chest.GetBlendShapeWeight(0));
-        _chestStageB.SetBlendShapeWeight(1, _chest.GetBlendShapeWeight(1));
-        _mouthStageB.SetBlendShapeWeight(0, _mouth.GetBlendShapeWeight(0));
-        _mouthStageB.SetBlendShapeWeight(1, _mouth.GetBlendShapeWeight(1));
+        for (int i = 0; i < StageBParameters.Count; i++)
+        {
+            var par = StageBParameters[i];
+            par.StageBMeshRenderer.SetBlendShapeWeight(par.BlendShapeIndex, par.StageAMeshRenderer.GetBlendShapeWeight(par.BlendShapeIndex));
+        }
 
-        _humanStageA.SetActive(false);
-        _humanStageB.SetActive(true);
+        Instance._humanStageA.SetActive(false);
+        Instance._humanStageB.SetActive(true);
 
     }
 
@@ -196,4 +200,13 @@ public class Human : MonoBehaviour
     }
 
 #endif
+}
+
+[System.Serializable]
+public struct BlendShapeParameter
+{
+    public int ID;
+    public SkinnedMeshRenderer StageAMeshRenderer;
+    public SkinnedMeshRenderer StageBMeshRenderer;
+    public int BlendShapeIndex;
 }

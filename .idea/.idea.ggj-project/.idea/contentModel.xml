@@ -22,6 +22,7 @@
               <e p="HumanPart.cs" t="Include" />
               <e p="HumanPartSlot.cs" t="Include" />
             </e>
+            <e p="MainUIPanel.cs" t="Include" />
             <e p="ResultPanel.cs" t="Include" />
             <e p="Slot.cs" t="Include" />
           </e>

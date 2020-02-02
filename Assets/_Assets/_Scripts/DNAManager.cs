@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using DG.Tweening;
-using DNA.UI;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace DNA
@@ -13,8 +9,10 @@ namespace DNA
         private static DNAManager _instance;
         private static DNAManager Instance => _instance ? _instance : _instance = FindObjectOfType<DNAManager>();
 
+        [SerializeField] private float _timerOnLevel = 300f;
         [SerializeField] private GameObject _dnaPrefab;
         [SerializeField] private List<CompareSlotDNA> _dnaCompare;
+        public static List<CompareSlotDNA> DNACompare => Instance._dnaCompare;
         [SerializeField] private List<DNA> _dnaList = new List<DNA>();
         [SerializeField] private List<Slot> _slotsList = new List<Slot>();
         [SerializeField] private float _orthographicSize;
@@ -54,6 +52,7 @@ namespace DNA
             }
 
             inDNA.Slot.ChangeDNASlots(slot);
+            Instance.CheckStageA();
         }
 
         private void Update()
@@ -66,8 +65,25 @@ namespace DNA
             transform.Rotate(GameManager.SpeedRotateDNA * Time.deltaTime, 0f, 0f);
         }
 
+        private void CheckStageA()
+        {
+            var count = 0;
+            for (int i = 0; i < DNAList.Count; i++)
+            {
+                if (i == Instance._slotsList[i].DNA.ID)
+                    count++;
+            }
+
+            if (count >= DNAList.Count)
+            {
+                GameManager.NowStepLevel = GameState.PlayStageB;
+                Human.EnableStageBHuman();
+            }
+        }
+
         public static void CheckResult()
         {
+            GameManager.NowStepLevel = GameState.CalculateResult;
             var allScore = 0f;
             var score = 0.5f / Instance._dnaList.Count;
             for (int i = 0; i < DNAList.Count; i++)
@@ -77,7 +93,8 @@ namespace DNA
                     allScore += score;
                 }
             }
-
+            
+            GameManager.ResultPanel.gameObject.SetActive(true);
             GameManager.ResultPanel.Result(allScore);
         }
 
