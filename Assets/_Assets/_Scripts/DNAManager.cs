@@ -36,6 +36,21 @@ namespace DNA
         private void OnEnable()
         {
             CalcCameraSize();
+            RandomDNA();
+            //CheckHumanParts();
+        }
+
+        private void CheckHumanParts()
+        {
+            /*for (int i = 0; i < DNAList.Count; i++)
+            {
+                var idPart1 = DNAList[i].IDPartHuman;
+                var idSlot = DNAList[i].Slot.ID;
+                var idPart2 = DNAList[idSlot].IDPartHuman;
+                var slot1 = Human.GetCurrentSlotFromPart(Human.HumanParts[idPart1]);
+                var slot2 = Human.GetCurrentSlotFromPart(Human.HumanParts[idPart2]);
+                Human.SwapParts(slot1, slot2);
+            }*/
         }
 
         public static void CheckNewDNAPos(DNA inDNA)
@@ -70,7 +85,7 @@ namespace DNA
             var score = 1f / Instance._dnaList.Count;
             for (int i = 0; i < DNAList.Count; i++)
             {
-                if (Instance._dnaCompare[i].IdDNA == Instance._slotsList[i].DNA.ID) allScore += score;
+                if (i == Instance._slotsList[i].DNA.ID) allScore += score;
             }
             Debug.Log("Score: " + Mathf.RoundToInt(allScore * 100f));
         }
@@ -157,13 +172,12 @@ namespace DNA
                 dna.name = "DNA_" + i;
                 dna.transform.localPosition = Vector3.zero;
                 var dnaComp = dna.GetComponent<DNA>();
-                dnaComp.ID = _slotsList[i].ID;
+                dnaComp.ID = i;
                 dnaComp.Slot = _slotsList[i];
                 dnaComp.IDPartHuman = _dnaCompare[i].IdPartHuman;
                 _slotsList[i].DNA = dnaComp;
                 _dnaList.Add(dnaComp);
             }
-            RandomDNA();
         }
 
         public void RemoveAll()

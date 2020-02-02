@@ -45,7 +45,7 @@ namespace DNA
             {
                 switch (GameManager.NowStepLevel)
                 {
-                    case GameState.PlayStage:
+                    case GameState.PlayStageA:
                         _isDrag = true;
                         _lastPosX = Input.mousePosition.x;
                         break;
@@ -58,7 +58,7 @@ namespace DNA
             {
                 switch (GameManager.NowStepLevel)
                 {
-                    case GameState.PlayStage:
+                    case GameState.PlayStageA:
                         _isRotate = true;
                         _lastRotY = Input.mousePosition.y;
                         break;
@@ -83,7 +83,7 @@ namespace DNA
             {
                 switch (GameManager.NowStepLevel)
                 {
-                    case GameState.PlayStage:
+                    case GameState.PlayStageA:
                         _isDrag = false;
                         _lastPosX = 0;
                         DNAManager.CheckNewDNAPos(this);
@@ -98,7 +98,7 @@ namespace DNA
             {
                 switch (GameManager.NowStepLevel)
                 {
-                    case GameState.PlayStage:
+                    case GameState.PlayStageA:
                         _isRotate = false;
                         _lastRotY = 0f;
                         break;

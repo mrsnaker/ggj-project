@@ -29,6 +29,7 @@ namespace DNA
             {
                 transform.RotateAround(Human.HumanTransform.position, transform.right, -Input.GetAxis("Mouse Y") * _speed);
                 transform.RotateAround(Human.HumanTransform.position, transform.up, Input.GetAxis("Mouse X") * _speed);
+                transform.LookAt(Human.HumanTransform.position);
             }
         }
 
