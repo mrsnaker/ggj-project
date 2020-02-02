@@ -4,11 +4,14 @@ namespace DNA
 {
     public class CameraControl : MonoBehaviour
     {
+        private static CameraControl _instance;
+        public static CameraControl Instance => _instance ? _instance : _instance = FindObjectOfType<CameraControl>();
+
         private float _speed = 4f;
         private float _scrollSpeed = 0.5f;
         private float _scrollValue = 0;
         private float _minScrollBorder = -5f;
-        private float _maxScrollBorder = 2f;
+        private float _maxScrollBorder = 2.5f;
 
         private Vector3 _cameraScrollPosition;
 

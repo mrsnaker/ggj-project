@@ -124,11 +124,12 @@ namespace DNA
 
         private void CheckRotate()
         {
-            if(!_isRotate) return;
-            
+            if (!_isRotate) return;
+
             var mousePos = Input.mousePosition;
             Renderer.SetBlendShapeWeight(0, Mathf.Clamp(Renderer.GetBlendShapeWeight(0) + (mousePos.y - _lastRotY) * GameManager.SpeedRotateDNA * Time.deltaTime, 0, 100));
-            Human.StageBParameters[DNAManager.DNACompare[ID].IdBlend].StageBMeshRenderer.SetBlendShapeWeight(Human.StageBParameters[DNAManager.DNACompare[ID].IdBlend].BlendShapeIndex, Renderer.GetBlendShapeWeight(0));
+            if (DNAManager.DNACompare[ID].IdBlend >= 0)
+                Human.StageBParameters[DNAManager.DNACompare[ID].IdBlend].StageBMeshRenderer.SetBlendShapeWeight(Human.StageBParameters[DNAManager.DNACompare[ID].IdBlend].BlendShapeIndex, Renderer.GetBlendShapeWeight(0));
             /*var rot = transform.localEulerAngles;
             rot.x += (mousePos.y - _lastRotY) * Time.deltaTime;
             transform.localEulerAngles = rot;*/
