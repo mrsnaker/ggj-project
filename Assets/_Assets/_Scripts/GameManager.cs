@@ -1,4 +1,5 @@
 ﻿using System;
+using DNA.UI;
 using UnityEngine;
 
 namespace DNA
@@ -16,6 +17,8 @@ namespace DNA
 
         [SerializeField] private float _speedRotateDNA;
         public static float SpeedRotateDNA => Instance._speedRotateDNA;
+        [SerializeField] private ResultPanel _resultPanel;
+        public static ResultPanel ResultPanel => Instance._resultPanel;
 
         private static int _nowLevelID = 0;
         public static GameState NowStepLevel { get; private set; } = 0;
