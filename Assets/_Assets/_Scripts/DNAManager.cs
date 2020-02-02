@@ -11,6 +11,8 @@ namespace DNA
 
         [SerializeField] private float _timerOnLevel = 300f;
         public static float TimerOnLevel => Instance._timerOnLevel;
+        [SerializeField] private RectTransform _photoPanel;
+        public static RectTransform PhotoPanel => Instance._photoPanel;
         [SerializeField] private GameObject _dnaPrefab;
         [SerializeField] private List<CompareSlotDNA> _dnaCompare;
         public static List<CompareSlotDNA> DNACompare => Instance._dnaCompare;
@@ -86,12 +88,20 @@ namespace DNA
         {
             GameManager.NowStepLevel = GameState.CalculateResult;
             var allScore = 0f;
-            var score = 0.5f / Instance._dnaList.Count;
+            var score = 0.5f / DNAList.Count;
             for (int i = 0; i < DNAList.Count; i++)
             {
                 if (i == Instance._slotsList[i].DNA.ID)
                 {
                     allScore += score;
+                    if (DNACompare[i].IdBlend == -1) allScore += score;
+                    else
+                    {
+                        var playerBlendResult = Human.StageBParameters[DNACompare[i].IdBlend].StageBMeshRenderer
+                            .GetBlendShapeWeight(Human.StageBParameters[DNACompare[i].IdBlend].BlendShapeIndex);
+                        var needResult = DNACompare[i].EndBlendValue;
+                        allScore += score * (1f - (Mathf.Abs(playerBlendResult - needResult) * 0.01f));
+                    }
                 }
             }
             
