@@ -28,6 +28,9 @@ public class Human : MonoBehaviour
 
     [SerializeField] private List<BlendShapeParameter> _stageBParameters;
 
+    public SkinnedMeshRenderer Chest => GameManager.NowStepLevel == GameState.PlayStageA ? _chest : _chestStageB;
+    public SkinnedMeshRenderer Mouth => GameManager.NowStepLevel == GameState.PlayStageA ? _mouth : _mouthStageB;
+
     private static System.Random rng = new System.Random();
     private Sequence _chestAnimation;
     public static Transform HumanTransform => Instance.transform;
@@ -111,17 +114,19 @@ public class Human : MonoBehaviour
             par.StageBMeshRenderer.SetBlendShapeWeight(par.BlendShapeIndex, par.StageAMeshRenderer.GetBlendShapeWeight(par.BlendShapeIndex));
         }
 
+        Instance.StopChestAnimation();
         Instance._humanStageA.SetActive(false);
         Instance._humanStageB.SetActive(true);
+        Instance.StartChestAnimation();
 
     }
 
     private Sequence StartChestAnimation()
     {
         return DOTween.Sequence()
-            .AppendCallback(()=> { _chest.SetBlendShapeWeight(0, 0); })
-            .Append(DOTween.To(() => _chest.GetBlendShapeWeight(0), x => _chest.SetBlendShapeWeight(0, x), 100f, 1.5f))
-            .Append(DOTween.To(() => _chest.GetBlendShapeWeight(0), x => _chest.SetBlendShapeWeight(0, x), 0f, 0.75f))
+            .AppendCallback(()=> { Chest.SetBlendShapeWeight(0, 0); })
+            .Append(DOTween.To(() => Chest.GetBlendShapeWeight(0), x => Chest.SetBlendShapeWeight(0, x), 100f, 1.5f))
+            .Append(DOTween.To(() => Chest.GetBlendShapeWeight(0), x => Chest.SetBlendShapeWeight(0, x), 0f, 0.75f))
             .SetLoops(-1);
     }
 
@@ -135,9 +140,9 @@ public class Human : MonoBehaviour
         var loopsCount = Mathf.RoundToInt(duration);
         var randomMouthOpenValue = Random.Range(80, 100);
         return DOTween.Sequence()
-            .AppendCallback(() => { _mouth.SetBlendShapeWeight(0, 0); })
-            .Append(DOTween.To(() => _mouth.GetBlendShapeWeight(0), x => _mouth.SetBlendShapeWeight(0, x), randomMouthOpenValue, 0.5f))
-            .Append(DOTween.To(() => _mouth.GetBlendShapeWeight(0), x => _mouth.SetBlendShapeWeight(0, x), 0f, 0.5f))
+            .AppendCallback(() => { Mouth.SetBlendShapeWeight(0, 0); })
+            .Append(DOTween.To(() => Mouth.GetBlendShapeWeight(0), x => Mouth.SetBlendShapeWeight(0, x), randomMouthOpenValue, 0.5f))
+            .Append(DOTween.To(() => Mouth.GetBlendShapeWeight(0), x => Mouth.SetBlendShapeWeight(0, x), 0f, 0.5f))
             .SetLoops(loopsCount);
     }
 

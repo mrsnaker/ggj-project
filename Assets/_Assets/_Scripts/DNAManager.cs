@@ -100,11 +100,19 @@ namespace DNA
 
         public static void RandomDNA()
         {
+            var correctRandom = true;
             foreach (var dna in DNAList)
             {
                 var random = Random.Range(0, DNAList.Count);
                 dna.Slot.ChangeDNASlots(DNAList[random].Slot, true);
             }
+
+            foreach (var dna in DNAList)
+            {
+                if (dna.Slot.ID == dna.ID) correctRandom = false;
+            }
+
+            if (!correctRandom) RandomDNA();
         }
 
         private void CalcCameraSize()
