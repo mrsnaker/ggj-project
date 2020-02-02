@@ -24,19 +24,21 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/DNAManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/Slot.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/CameraControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Assets/_Scripts/ResultPanel.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/GlobalEvents.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Slot.cs" />
-        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Editor/DNAManagerEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/DNA.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Editor/HumanEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Human/Human.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/CameraControl.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/Extensions.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/ResultPanel.cs" />
+        <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/_Assets/_Scripts/DNAManager.cs" />
       </list>
     </option>
@@ -91,7 +93,7 @@
       <updated>1580547718578</updated>
       <workItem from="1580547725061" duration="26713000" />
       <workItem from="1580587768881" duration="60000" />
-      <workItem from="1580587859450" duration="9264000" />
+      <workItem from="1580587859450" duration="11953000" />
     </task>
     <servers />
   </component>
