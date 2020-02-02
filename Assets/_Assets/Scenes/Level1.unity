@@ -154,12 +154,16 @@ MonoBehaviour:
     type: 3}
   _dnaCompare:
   - _idDNA: 0
+    _idPartHuman: 0
     _rotateAngle: 0
   - _idDNA: 1
+    _idPartHuman: 0
     _rotateAngle: 0
   - _idDNA: 2
+    _idPartHuman: 0
     _rotateAngle: 0
   - _idDNA: 3
+    _idPartHuman: 0
     _rotateAngle: 0
   _dnaList:
   - {fileID: 1600669377}
@@ -205,12 +209,12 @@ PrefabInstance:
     - target: {fileID: 1914993142114539562, guid: 3e55442caf7d6c044bb07f432c0473d1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1914993142114539562, guid: 3e55442caf7d6c044bb07f432c0473d1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1914993142114539562, guid: 3e55442caf7d6c044bb07f432c0473d1,
         type: 3}
@@ -255,7 +259,7 @@ PrefabInstance:
     - target: {fileID: 5955053154589019318, guid: 3e55442caf7d6c044bb07f432c0473d1,
         type: 3}
       propertyPath: m_Name
-      value: HumanStageA
+      value: Human
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e55442caf7d6c044bb07f432c0473d1, type: 3}
@@ -516,6 +520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 0
+  _idPartHuman: 0
   _slot: {fileID: 752425357}
 --- !u!1 &980867222
 GameObject:
@@ -712,6 +717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 2
+  _idPartHuman: 0
   _slot: {fileID: 1696847554}
 --- !u!1 &1286318567
 GameObject:
@@ -871,6 +877,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 3
+  _idPartHuman: 0
   _slot: {fileID: 1046055705}
 --- !u!1 &1696847553
 GameObject:
@@ -1030,6 +1037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 1
+  _idPartHuman: 0
   _slot: {fileID: 1286318568}
 --- !u!1 &2003015400
 GameObject:

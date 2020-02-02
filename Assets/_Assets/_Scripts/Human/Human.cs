@@ -10,6 +10,9 @@ public class Human : MonoBehaviour
     private static Human _instance;
     private static Human Instance => _instance ? _instance : _instance = FindObjectOfType<Human>();
 
+    [SerializeField] private GameObject _humanStageA;
+    [SerializeField] private GameObject _humanStageB;
+
     [SerializeField] private HumanPartSlot _humanPartSlotPrefab;
     [SerializeField] private List<HumanPart> _humanParts;
     public static List<HumanPart> HumanParts => Instance._humanParts;
@@ -17,6 +20,11 @@ public class Human : MonoBehaviour
     public static Dictionary<HumanPartSize, List<HumanPartSlot>> HumanSlots => Instance._humanSlots;
 
     [SerializeField] private SkinnedMeshRenderer _chest;
+    [SerializeField] private SkinnedMeshRenderer _mouth;
+
+    [SerializeField] private SkinnedMeshRenderer _chestStageB;
+    [SerializeField] private SkinnedMeshRenderer _mouthStageB;
+    [SerializeField] private SkinnedMeshRenderer _noseStageB;
 
     private static System.Random rng = new System.Random();
     private Sequence _chestAnimation;
@@ -30,6 +38,8 @@ public class Human : MonoBehaviour
         {
             var humanPart = _humanParts[i];
             humanPart.ID = i;
+            humanPart.OriginalPos = humanPart.transform.localPosition;
+            humanPart.OriginalRotation = humanPart.transform.localRotation;
             var humanSlot = Instantiate(_humanPartSlotPrefab);
             humanSlot.name = humanPart.name + "Slot";
             humanSlot.ID = humanPart.ID;
@@ -64,6 +74,27 @@ public class Human : MonoBehaviour
         //ShuffleParts(_humanPartSlots);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            OpenMouth(1f);
+            EnableStageBHuman();
+        }
+    }
+
+    private void EnableStageBHuman()
+    {
+        _chestStageB.SetBlendShapeWeight(0, _chest.GetBlendShapeWeight(0));
+        _chestStageB.SetBlendShapeWeight(1, _chest.GetBlendShapeWeight(1));
+        _mouthStageB.SetBlendShapeWeight(0, _mouth.GetBlendShapeWeight(0));
+        _mouthStageB.SetBlendShapeWeight(1, _mouth.GetBlendShapeWeight(1));
+
+        _humanStageA.SetActive(false);
+        _humanStageB.SetActive(true);
+
+    }
+
     private Sequence StartChestAnimation()
     {
         return DOTween.Sequence()
@@ -75,7 +106,16 @@ public class Human : MonoBehaviour
 
     private void StopChestAnimation()
     {
+        _chestAnimation.Complete();
+    }
 
+    public Sequence OpenMouth(float duration)
+    {
+        var randomMouthOpenValue = Random.Range(80, 100);
+        return DOTween.Sequence()
+            .AppendCallback(() => { _mouth.SetBlendShapeWeight(0, 0); })
+            .Append(DOTween.To(() => _mouth.GetBlendShapeWeight(0), x => _mouth.SetBlendShapeWeight(0, x), randomMouthOpenValue, duration / 2))
+            .Append(DOTween.To(() => _mouth.GetBlendShapeWeight(0), x => _mouth.SetBlendShapeWeight(0, x), 0f, duration / 2));
     }
 
     private static HumanPartSlot GetRightSlotFromPart(HumanPart part)
@@ -100,28 +140,40 @@ public class Human : MonoBehaviour
 
     public static void SwapParts(HumanPartSlot a, HumanPartSlot b)
     {
-        Debug.Log(a.name + "--" + b.name);
+        //Debug.Log(a.name + "--" + b.name);
         if (a.Size != b.Size) return;
+        if (a.ID == b.ID) return;
         var temp = a.CurrentPart;
         a.CurrentPart = b.CurrentPart;
         a.CurrentPart.transform.parent = a.transform;
         a.CurrentPart.transform.localPosition = Vector3.zero;
         a.CurrentPart.transform.localRotation = Quaternion.identity;
+        b.CurrentPart.transform.parent = a.transform;
 
-        var diff = a.Direction.localRotation.eulerAngles - a.CurrentPart.Direction.localRotation.eulerAngles;
-        //diff = a.CurrentPart.Direction.localRotation.eulerAngles - a.Direction.localRotation.eulerAngles;
-        //diff = new Vector3(Mathf.Abs(diff.x), Mathf.Abs(diff.y), Mathf.Abs(diff.z));
-        a.CurrentPart.transform.localRotation = a.Direction.localRotation;//Quaternion.Euler(diff);
-
+        if (a.CurrentPart.ID == a.ID)
+        {
+            a.CurrentPart.transform.localPosition = Vector3.zero;
+            a.CurrentPart.transform.localRotation = Quaternion.identity;
+        }
+        else
+        {
+            a.CurrentPart.transform.localRotation = a.Direction.localRotation;
+        }
+        
         b.CurrentPart = temp;
         b.CurrentPart.transform.parent = b.transform;
         b.CurrentPart.transform.localPosition = Vector3.zero;
         b.CurrentPart.transform.localRotation = Quaternion.identity;
 
-        diff = b.Direction.localRotation.eulerAngles - b.CurrentPart.Direction.localRotation.eulerAngles;
-        //diff = b.CurrentPart.Direction.localRotation.eulerAngles - b.Direction.localRotation.eulerAngles;
-        //diff = new Vector3(Mathf.Abs(diff.x), Mathf.Abs(diff.y), Mathf.Abs(diff.z));
-        b.CurrentPart.transform.localRotation = b.Direction.localRotation;//Quaternion.Euler(diff);
+        if (b.CurrentPart.ID == b.ID)
+        {
+            b.CurrentPart.transform.localPosition = Vector3.zero;
+            b.CurrentPart.transform.localRotation = Quaternion.identity;
+        }
+        else
+        {
+            b.CurrentPart.transform.localRotation = b.Direction.localRotation;
+        }
     }
 
     private static void ShuffleParts(List<HumanPartSlot> slots)

@@ -6,7 +6,8 @@ using Random = UnityEngine.Random;
 
 public enum GameState
 {
-    PlayStage,
+    PlayStageA,
+    PlayStageB,
     CalculateResult,
     LoadingNextLevel,
 }
@@ -14,11 +15,8 @@ public enum GameState
 [Serializable]
 public class CompareSlotDNA
 {
-    [SerializeField] private int _idDNA;
     [SerializeField] private int _idPartHuman;
     [Range(0,100)] [SerializeField] private float _rotateAngle;
-
-    public int IdDNA => _idDNA;
     public int IdPartHuman => _idPartHuman;
     public float RotateAngle => _rotateAngle;
 }
@@ -30,7 +28,6 @@ public static class Extension
 
     public static void ChangeDNASlots(this Slot slot, Slot newSlot, bool fast = false)
     {
-        if(!Application.isPlaying) return;
         var tempSlotDNA = slot.DNA;
         slot.DNA = newSlot.DNA;
         newSlot.DNA = tempSlotDNA;
@@ -39,6 +36,7 @@ public static class Extension
         slot.DNA.ResetSmoothPos(fast);
         newSlot.DNA.ResetSmoothPos(fast);
 
+        if(!Application.isPlaying) return;
         var slot1 = Human.GetCurrentSlotFromPart(Human.HumanParts[slot.DNA.IDPartHuman]);
         var slot2 = Human.GetCurrentSlotFromPart(Human.HumanParts[newSlot.DNA.IDPartHuman]);
         Human.SwapParts(slot1, slot2);
