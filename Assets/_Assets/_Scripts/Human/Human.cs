@@ -22,6 +22,9 @@ public class Human : MonoBehaviour
     private Sequence _chestAnimation;
     public static Transform HumanTransform => Instance.transform;
 
+    private int _currentPart1 = 0;
+    private int _currentPart2 = 1;
+
     private void Awake()
     {
         _chestAnimation = StartChestAnimation();
@@ -64,6 +67,14 @@ public class Human : MonoBehaviour
         //ShuffleParts(_humanPartSlots);
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            SwapParts(_humanSlots[HumanPartSize.Big][1], _humanSlots[HumanPartSize.Big][2]);
+        }
+    }
+
     private Sequence StartChestAnimation()
     {
         return DOTween.Sequence()
@@ -75,7 +86,7 @@ public class Human : MonoBehaviour
 
     private void StopChestAnimation()
     {
-
+        _chestAnimation.Complete();
     }
 
     private static HumanPartSlot GetRightSlotFromPart(HumanPart part)

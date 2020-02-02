@@ -3259,7 +3259,7 @@ MonoBehaviour:
   - {fileID: 6255372041513925589}
   - {fileID: 5146752218825648283}
   - {fileID: 700994873395701147}
-  _chest: {fileID: 0}
+  _chest: {fileID: 5835295782002888233}
 --- !u!1 &6050679120359855035
 GameObject:
   m_ObjectHideFlags: 0
