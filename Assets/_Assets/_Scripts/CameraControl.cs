@@ -8,7 +8,7 @@ namespace DNA
         private float _scrollSpeed = 0.5f;
         private float _scrollValue = 0;
         private float _minScrollBorder = -5f;
-        private float _maxScrollBorder = 2f;
+        private float _maxScrollBorder = 2.5f;
 
         private Vector3 _cameraScrollPosition;
 
